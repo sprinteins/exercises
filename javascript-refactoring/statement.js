@@ -13,7 +13,7 @@ function statement(invoice, plays) {
             minimumFractionDigits: 2
         }).format;
 
-    for (let perf of invoice.performances) {
+    for (const perf of invoice.performances) {
         const play = plays[perf.playID];
         let thisAmount = 0;
 
