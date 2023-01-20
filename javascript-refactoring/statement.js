@@ -47,17 +47,17 @@ const calculator = (performance, play) => {
      *
      * @return {int, int} Return the calculated credit and sale amount.
      */
-    let thisAmount = play.amount.total;
+    let saleAmount = play.amount.total;
     if (performance.audience > play.audienceLimit) {
-        thisAmount += play.amount.constant + (play.amount.multiple1 * (performance.audience - play.audienceLimit));
+        saleAmount += play.amount.constant + (play.amount.multiple1 * (performance.audience - play.audienceLimit));
     }
-    thisAmount += play.amount.multiple2 * performance.audience;
+    saleAmount += play.amount.multiple2 * performance.audience;
 
     // add volume credits if the limit is reached
     let volumeCredit = Math.max(performance.audience - play.audienceVolumeCredit, 0);
     // add extra credit if the play has the bonus
     if (play.audienceBonus) volumeCredit += Math.floor(performance.audience / play.audienceBonus);
-    return [volumeCredit, thisAmount];
+    return [volumeCredit, saleAmount];
 }
 
 export default statement;
