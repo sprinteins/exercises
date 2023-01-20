@@ -24,7 +24,7 @@ const statement = (invoice, plays) => {
         // add volume credits
         volumeCredits += Math.max(performance.audience - 30, 0);
         // add extra credit for every ten comedy attendees
-        if ("comedy" === play.type) volumeCredits += Math.floor(performance.audience / 5);
+        if ("comedy" === play.type) volumeCredits += Math.floor(performance.audience / 10);
 
         // print line for this order
         result += `  ${play.name}: ${formatCurrency(thisAmount / 100)} (${performance.audience} seats)\n`;
