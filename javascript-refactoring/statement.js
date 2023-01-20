@@ -13,6 +13,7 @@ const statement = (invoice, plays) => {
     let result = `Statement for ${invoice.customer}\n`;
 
     for (const performance of invoice.performances) {
+        if(!(performance.playID in plays)) throw new Error(`unknown playID for: ${performance.playID}`)
         const play = plays[performance.playID];
         let thisAmount = play.amount.total;
         if (performance.audience > play.audience) {
