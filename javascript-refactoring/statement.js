@@ -32,10 +32,10 @@ const calculator = (performance, play) => {
     }
     thisAmount += play.amount.multiple2 * performance.audience;
 
-    // add volume credits
-    let volumeCredit = Math.max(performance.audience - 30, 0);
-    // add extra credit for every ten comedy attendees
-    if ("comedy" === play.type) volumeCredit += Math.floor(performance.audience / 10);
+    // add volume credits if the limit is reached
+    let volumeCredit = Math.max(performance.audience - play.audienceVolumeCredit, 0);
+    // add extra credit if the play has the bonus
+    if (play.audienceBonus) volumeCredit += Math.floor(performance.audience / play.audienceBonus);
     return [volumeCredit, thisAmount];
 }
 

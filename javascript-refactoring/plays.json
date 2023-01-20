@@ -3,18 +3,24 @@
         "name": "Hamlet",
         "type": "tragedy",
         "amount": {"total": 40000, "multiple1": 1000, "constant": 0, "multiple2": 0},
-        "audienceLimit": 30
+        "audienceLimit": 30,
+        "audienceBonus": null,
+        "audienceVolumeCredit": 30
     },
     "as-like": {
         "name": "As You Like It",
         "type": "comedy",
         "amount": {"total": 30000, "multiple1": 500, "constant": 10000, "multiple2": 300},
-        "audienceLimit": 20
+        "audienceLimit": 20,
+        "audienceBonus": 10,
+        "audienceVolumeCredit": 30
     },
     "othello": {
         "name": "Othello",
         "type": "tragedy",
         "amount": {"total": 40000, "multiple1": 1000, "constant": 0, "multiple2": 0},
-        "audienceLimit": 30
+        "audienceLimit": 30,
+        "audienceBonus": null,
+        "audienceVolumeCredit": 30
     }
 }
