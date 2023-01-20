@@ -27,8 +27,8 @@ const statement = (invoice, plays) => {
 
 const calculator = (performance, play) => {
     let thisAmount = play.amount.total;
-    if (performance.audience > play.audience) {
-        thisAmount += play.amount.constant + (play.amount.multiple1 * (performance.audience - play.audience));
+    if (performance.audience > play.audienceLimit) {
+        thisAmount += play.amount.constant + (play.amount.multiple1 * (performance.audience - play.audienceLimit));
     }
     thisAmount += play.amount.multiple2 * performance.audience;
 
