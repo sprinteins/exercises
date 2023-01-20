@@ -1,9 +1,5 @@
-module.exports = {
-    statement,
-}
 
-
-function statement(invoice, plays) {
+const statement = (invoice, plays) => {
     let totalAmount = 0;
     let volumeCredits = 0;
     let result = `Statement for ${invoice.customer}\n`;
@@ -32,7 +28,7 @@ function statement(invoice, plays) {
                 thisAmount += 300 * performance.audience;
                 break;
             default:
-                throw new Error(`unknown type: ${play.type}`);
+                throw new EvalError(`unknown type: ${play.type}`);
         }
 
         // add volume credits
@@ -48,3 +44,5 @@ function statement(invoice, plays) {
     result += `You earned ${volumeCredits} credits\n`;
     return result;
 }
+
+export default statement;

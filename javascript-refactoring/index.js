@@ -1,5 +1,7 @@
-const { statement } = require("./statement")
-const plays = require("./plays.json")
-const invoices = require("./invoices.json")
+import statement from './statement.js';
+import plays from "./plays.json" assert { type: "json" };
+import invoices from "./invoices.json" assert { type: "json" };
 
 console.log(statement(invoices[0], plays));
+
+
