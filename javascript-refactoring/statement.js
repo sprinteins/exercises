@@ -1,4 +1,10 @@
 const formatCurrency = value => {
+    /**
+     * A function, which receive an amount of money and format that in USD 
+     * @param {int}   value       A json object, which contains the sales detail of each play
+     *
+     * @return {string} Return the styled value in the USD format.
+     */
     return new Intl.NumberFormat("en-US",
         {
             style: "currency", currency: "USD",
@@ -7,6 +13,13 @@ const formatCurrency = value => {
     }
 
 const statement = (invoice, plays) => {
+    /**
+     * A function, which create a Sale report for an invoice 
+     * @param {object}   invoice       A json object, which contains the sales detail of each play
+     * @param {object}   plays         A json object, which contains a mapping(or config) for each play
+     *
+     * @return {string} Return the generated report as a string, for the invoice.
+     */
     let totalAmount = 0;
     let volumeCredits = 0;
     let result = `Statement for ${invoice.customer}\n`;
@@ -26,6 +39,14 @@ const statement = (invoice, plays) => {
 }
 
 const calculator = (performance, play) => {
+    /**
+     * A function, which calculate the total sale amount of the given play, 
+     * and the Credit which saler receive for it.
+     * @param {object}   performance     Performance sale detail
+     * @param {object}   play            Extra information about how to calculate the given play inside the performance
+     *
+     * @return {int, int} Return the calculated credit and sale amount.
+     */
     let thisAmount = play.amount.total;
     if (performance.audience > play.audienceLimit) {
         thisAmount += play.amount.constant + (play.amount.multiple1 * (performance.audience - play.audienceLimit));
