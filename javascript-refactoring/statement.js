@@ -20,22 +20,22 @@ const statement = (invoice, plays) => {
      *
      * @return {string} Return the generated report as a string, for the invoice.
      */
-    let totalAmount = 0;
+    let totalSaleAmount = 0;
     let volumeCredits = 0;
-    let result = `Statement for ${invoice.customer}\n`;
+    let salseResult = '';
 
     for (const performance of invoice.performances) {
         if(!(performance.playID in plays)) throw new Error(`unknown playID for: ${performance.playID}`)
         const play = plays[performance.playID];
-        const [ volumeCredit, thisAmount ] = calculator(performance, play);
+        const [ volumeCredit, saleAmount ] = calculator(performance, play);
         // print line for this order
-        result += `  ${play.name}: ${formatCurrency(thisAmount / 100)} (${performance.audience} seats)\n`;
-        totalAmount += thisAmount;
+        salseResult += `  ${play.name}: ${formatCurrency(saleAmount)} (${performance.audience} seats)\n`;
+        totalSaleAmount += saleAmount;
         volumeCredits += volumeCredit;
     }
-    result += `Amount owed is ${formatCurrency(totalAmount / 100)}\n`;
-    result += `You earned ${volumeCredits} credits\n`;
-    return result;
+    const saleReport = `Statement for ${invoice.customer}:\n\n ${salseResult} 
+    Amount owed is: ${formatCurrency(totalSaleAmount)}\n You earned ${volumeCredits} credits\n`;
+    return saleReport;
 }
 
 const calculator = (performance, play) => {
