@@ -11,25 +11,12 @@ const statement = (invoice, plays) => {
 
     for (const performance of invoice.performances) {
         const play = plays[performance.playID];
-        let thisAmount = 0;
-
-        switch (play.type) {
-            case "tragedy":
-                thisAmount = 40000;
-                if (performance.audience > 30) {
-                    thisAmount += 1000 * (performance.audience - 30);
-                }
-                break;
-            case "comedy":
-                thisAmount = 30000;
-                if (performance.audience > 20) {
-                    thisAmount += 10000 + 500 * (performance.audience - 20);
-                }
-                thisAmount += 300 * performance.audience;
-                break;
-            default:
-                throw new EvalError(`unknown type: ${play.type}`);
+        let thisAmount = play.amount.total;
+        if (performance.audience > play.audience) {
+            thisAmount += play.amount.constant + (play.amount.multiple1 * (performance.audience - play.audience));
         }
+        thisAmount += play.amount.multiple2 * performance.audience;
+
 
         // add volume credits
         volumeCredits += Math.max(performance.audience - 30, 0);
