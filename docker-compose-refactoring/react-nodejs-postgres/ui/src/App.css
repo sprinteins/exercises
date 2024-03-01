@@ -11,17 +11,12 @@
   will-change: filter;
   transition: filter 300ms;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
 
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -38,19 +33,12 @@
 }
 
 .button {
-  color: white;
   padding: 0.4em;
   font-size: 0.8em;
-  background-color: #616162cf;
   margin-left: 1em;
 }
 
 .label {
   font-size: 0.8em;
-  color: #888;
   margin-left: 0.5em;
-}
-
-.read-the-docs {
-  color: #888;
 }

@@ -70,51 +70,40 @@ function App() {
   ];
 
   return (
-    <>
-      <form id="add-user-form" onSubmit={handleSubmit}>
-        <label className="label" htmlFor="first_name">First Name: </label>
-        <input type='text' id="first_name" name="first_name" placeholder="Ela" value={newUser.first_name} onChange={handleChange} />
+      <>
+        <form id="add-user-form" onSubmit={handleSubmit}>
+          <label className="label" htmlFor="first_name">First Name: </label>
+          <input type='text' id="first_name" name="first_name" placeholder="Ela" value={newUser.first_name} onChange={handleChange} />
 
-        <label className="label" htmlFor="last_name">Last Name: </label>
-        <input type='text' id="last_name" name="last_name" placeholder="Brown" value={newUser.last_name} onChange={handleChange} />
+          <label className="label" htmlFor="last_name">Last Name: </label>
+          <input type='text' id="last_name" name="last_name" placeholder="Brown" value={newUser.last_name} onChange={handleChange} />
 
-        <label className="label" htmlFor="age">Age: </label>
-        <input type='number' min="0" id="age" name="age" placeholder="38" value={newUser.age} onChange={handleChange} />
+          <label className="label" htmlFor="age">Age: </label>
+          <input type='number' min="0" id="age" name="age" placeholder="38" value={newUser.age} onChange={handleChange} />
 
-        <button className="button" type="submit">Add User</button>
-      </form>
+          <button className="button" type="submit">Add User</button>
+        </form>
 
 
-      <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={users}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-          sx={{
-            marginTop: 2,
-            boxShadow: 2,
-            border: 2,
-            borderColor: 'white',
-            '& .MuiDataGrid-cell:hover': {
-              color: 'white',
-            },
-            color: 'white',
-            '& .MuiDataGrid-row': {
-              color: 'white',
-            },
-            '& .MuiTablePagination-toolbar': {
-              color: 'white',
-            },
-          }}
-        />
-      </div>
+        <div style={{ height: 400, width: '100%' }}>
+          <DataGrid
+              rows={users}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 5 },
+                },
+              }}
+              pageSizeOptions={[5, 10]}
+              sx={{
+                marginTop: 2,
+                boxShadow: 2,
+                border: 2,
+              }}
+          />
+        </div>
 
-    </>
+      </>
   )
 }
 
