@@ -1,0 +1,136 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.sprinteins</groupId>
+	<artifactId>java-refactoring</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+
+	<properties>
+		<source.version>17</source.version>
+		<target.version>17</target.version>
+		<compiler.plugin.version>3.13.0</compiler.plugin.version>
+		<maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+		<spring-boot-maven.plugin.version>3.4.0</spring-boot-maven.plugin.version>
+	</properties>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>test</testSourceDirectory>
+
+		<resources>
+			<resource>
+				<directory>resources</directory>
+			</resource>
+		</resources>
+
+		<testResources>
+			<testResource>
+				<directory>test-resources</directory>
+			</testResource>
+		</testResources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compiler.plugin.version}</version>
+				<configuration>
+					<source>${source.version}</source>
+					<target>${target.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>libs/</classpathPrefix>
+							<mainClass>
+								Main
+							</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<archive>
+								<manifest>
+									<mainClass>
+										Main
+									</mainClass>
+								</manifest>
+							</archive>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring-boot-maven.plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<classifier>spring-boot</classifier>
+							<mainClass>
+								Main
+							</mainClass>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+
+		<!--		c:\ent\...\exercises\java-refactoring\lib>certUtil -hashfile
+		gson-1.4.jar SHA256-->
+		<!--SHA256 hash of gson-1.4.jar:-->
+		<!--8b12b5563b6db78f4697f8c1108bd0d0fd437cedee928ac1645df4b7361d1dda-->
+		<!--CertUtil: -hashfile command completed successfully.-->
+
+		<!--		C:\...\.m2\repository\com\google\code\gson\gson\1.4>certUtil
+		-hashfile gson-1.4.jar SHA256-->
+		<!--SHA256 hash of gson-1.4.jar:-->
+		<!--8b12b5563b6db78f4697f8c1108bd0d0fd437cedee928ac1645df4b7361d1dda-->
+		<!--CertUtil: -hashfile command completed successfully.-->
+
+
+		<!--		<dependency>-->
+		<!--			<groupId>com.google.code.gson</groupId>-->
+		<!--			<artifactId>gson</artifactId>-->
+		<!--			<version>1.4</version>-->
+		<!--			<scope>system</scope>-->
+		<!--			<systemPath>${project.basedir}/lib/gson-1.4.jar</systemPath>-->
+		<!--		</dependency>-->
+
+	</dependencies>
+
+</project>
