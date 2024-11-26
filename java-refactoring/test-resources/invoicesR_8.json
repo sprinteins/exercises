@@ -1,0 +1,19 @@
+[
+  {
+    "customer": "BigCo R8",
+    "performances": [
+      {
+        "playID": "hamlet",
+        "audience": 55.5
+      },
+      {
+        "playID": "as-like",
+        "audience": 35.3
+      },
+      {
+        "playID": "othello",
+        "audience": 40.9
+      }
+    ]
+  }
+]
