@@ -1,7 +1,11 @@
 package de.sprinteins;
 
+import java.io.File;
+import java.nio.file.Files;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * 
@@ -74,6 +78,26 @@ public class _Main {
 		result += "Amount owed is $" + (totalAmount / 100) + "\n";
 		result += "You earned " + volumeCredits + " credits\n";
 		return result;
+	}
+
+	protected static String _statement(String pathname_invoices, String pathname_plays) throws Exception {
+
+		JsonParser parser = new JsonParser();
+
+		String playsFile = new String(Files.readAllBytes(new File(pathname_plays).toPath()));
+
+		String invoicesFile = new String(Files.readAllBytes(new File(pathname_invoices).toPath()));
+
+		JsonObject plays = parser.parse(playsFile).getAsJsonObject();
+
+		JsonArray invoices = parser.parse(invoicesFile).getAsJsonArray();
+
+		return _statement(invoices, plays);
+	}
+
+	protected static void _main(String[] args) throws Exception {
+
+		System.out.println(_statement("invoices.json", "plays.json"));
 	}
 
 }
