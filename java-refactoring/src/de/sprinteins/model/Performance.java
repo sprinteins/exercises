@@ -31,28 +31,15 @@ public class Performance {
 	}
 
 	private int calculateThisAmount() {
-		int thisAmount = 0;
 
 		int audience = getAudience();
-
-		switch (this.play.getType()) {
-		case tragedy:
-			thisAmount = 400;
-			if (audience > 30) {
-				thisAmount += 10 * (audience - 30);
-			}
-			break;
-		case comedy:
-			thisAmount = 300;
-			if (audience > 20) {
-				thisAmount += 100 + 5 * (audience - 20);
-			}
-			thisAmount += 3 * audience;
-
-			break;
-//		 default:
-//			 throw new PlayTypeException();
+		PlayType playType = getPlay().getType();
+		
+		int thisAmount = playType.getPrice();
+		if (audience > playType.getAudienceLimit()) {
+			thisAmount += playType.getExtra() + playType.getMultiplayer() * (audience - playType.getAudienceLimit());
 		}
+		thisAmount += playType.getAudianceBonus() * audience;
 
 		return thisAmount;
 	}
@@ -60,7 +47,7 @@ public class Performance {
 	private int calculateVolumeCredits() {
 		int volumeCredits = 0;
 		// add extra credit for every ten comedy attendees
-		if (PlayType.comedy.equals(play.getType())) {
+		if (PlayType.COMEDY.equals(getPlay().getType())) {
 			// FIXME never worked
 			// volumeCredits += Math.floor(audience / 5);
 		}
@@ -70,6 +57,6 @@ public class Performance {
 
 	@Override
 	public String toString() {
-		return " " + play.getName() + ": $" + getAmount() + "(" + getAudience() + " seats)\n";
+		return " " + getPlay().getName() + ": $" + getAmount() + "(" + getAudience() + " seats)\n";
 	}
 }
