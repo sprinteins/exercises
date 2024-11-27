@@ -18,11 +18,11 @@ public class Performance {
 	public Performance(JsonObject performance, Play play) {
 		this(performance.get("audience").getAsInt(), play);
 	}
-	
+
 	public Performance(int audience, Play play) {
 
 		this.audience = audience;
-		
+
 		this.play = play;
 
 		this.amount = calculateThisAmount();
@@ -37,33 +37,35 @@ public class Performance {
 
 		switch (this.play.getType()) {
 		case tragedy:
-			thisAmount = 40000;
+			thisAmount = 400;
 			if (audience > 30) {
-				thisAmount += 1000 * (audience - 30);
+				thisAmount += 10 * (audience - 30);
 			}
 			break;
 		case comedy:
-			thisAmount = 30000;
+			thisAmount = 300;
 			if (audience > 20) {
-				thisAmount += 10000 + 500 * (audience - 20);
+				thisAmount += 100 + 5 * (audience - 20);
 			}
-			thisAmount += 300 * audience;
+			thisAmount += 3 * audience;
 
 			break;
 //		 default:
 //			 throw new PlayTypeException();
 		}
 
-		return thisAmount / 100;
+		return thisAmount;
 	}
 
 	private int calculateVolumeCredits() {
+		int volumeCredits = 0;
 		// add extra credit for every ten comedy attendees
 		if (PlayType.comedy.equals(play.getType())) {
-			// never worked
-			// return Math.floor(audience / 5);
+			// FIXME never worked
+			// volumeCredits += Math.floor(audience / 5);
 		}
-		return Math.max(getAudience() - 30, 0);
+		volumeCredits += Math.max(getAudience() - 30, 0);
+		return volumeCredits;
 	}
 
 	@Override
