@@ -16,8 +16,12 @@ public class Performance {
 	private int credits;
 
 	public Performance(JsonObject performance, Play play) {
+		this(performance.get("audience").getAsInt(), play);
+	}
+	
+	public Performance(int audience, Play play) {
 
-		this.audience = performance.get("audience").getAsInt();
+		this.audience = audience;
 		
 		this.play = play;
 

@@ -9,15 +9,17 @@ import lombok.Data;
 public class Play {
 
 	private PlayType type;
-	
+
 	private String name;
-	
+
 	public Play(JsonObject play) throws PlayTypeException {
-		String typeAsString = play.get("type").getAsString();
-//		PlayType type = PlayType.valueOf(typeAsString);
-		this.type = PlayType.fromString(typeAsString);
-		
-		this.name = play.get("name").getAsString();
+		// PlayType type = PlayType.valueOf(typeAsString);
+		this(PlayType.fromString(play.get("type").getAsString()), play.get("name").getAsString());
+	}
+
+	public Play(PlayType type, String name) throws PlayTypeException {
+		this.type = type;
+		this.name = name;
 	}
 
 }
