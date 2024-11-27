@@ -13,6 +13,7 @@ public class Main extends _Main {
 	 * @param inString - the inString
 	 * @return the {@link string_code}
 	 */
+	@Deprecated
 	static string_code hashit(String inString) {
 		return _hashit(inString);
 	}

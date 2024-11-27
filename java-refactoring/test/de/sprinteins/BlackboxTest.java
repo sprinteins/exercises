@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +25,7 @@ public class BlackboxTest {
 			String pathname_expected_result) throws Exception {
 
 		// because of \n linebreaks
-		try (Stream<String> stream = Files.lines(Paths.get(Path.of(pathname_expected_result).toUri()),
+		try (Stream<String> stream = Files.lines(Path.of(pathname_expected_result),
 				StandardCharsets.UTF_8)) {
 
 			StringBuilder expectedResultBuilder = new StringBuilder();
