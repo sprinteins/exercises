@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import de.sprinteins.exception.PlayTypeException;
-import de.sprinteins.model.Statement;
+import de.sprinteins.model.Invoice;
 
 /**
  * 
@@ -42,19 +42,30 @@ public class _Main {
 
 	protected static String _statement(JsonArray invoices, JsonObject plays) {
 
-		try {
-			Statement statement = new Statement(invoices, plays);
+		StringBuilder statement = new StringBuilder();
 
-			return statement.toString();
-
-		} catch (PlayTypeException e) {
-			return "error";
+		// FIXME backward compatibility
+		if (invoices.size() == 0) {
+			throw new IndexOutOfBoundsException();
 		}
+
+		invoices.forEach(invoice -> {
+			try {
+				Invoice i = new Invoice(invoice.getAsJsonObject(), plays);
+
+				statement.append(i.getStatement());
+
+			} catch (PlayTypeException e) {
+				statement.append("error");
+			}
+		});
+
+		return statement.toString();
 	}
 
-	protected static String _statement(String pathname_invoices, String pathname_plays) throws Exception {
+	protected static String _statement(String pathname_invoices, String pathname_plays) throws IOException {
 
-		// backward compatiblitity. first check if file exisits -> IOException
+		// FIXME backward compatiblitity. first check if file exisits -> IOException
 		String fileContentPlays = getFileContent(pathname_plays);
 		String fileContentInvoices = getFileContent(pathname_invoices);
 
