@@ -1,0 +1,18 @@
+[
+    {
+        "name": "tragedy",
+        "price": 400,
+        "audienceLimit": 30,
+        "extra": 0,
+        "multiplayer": 10,
+        "audianceBonus": 0
+    },
+    {
+        "name": "comedy",
+        "price": 300,
+        "audienceLimit": 20,
+        "extra": 100,
+        "multiplayer": 5,
+        "audianceBonus": 3
+    }
+]

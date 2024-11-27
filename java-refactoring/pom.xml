@@ -28,6 +28,9 @@
 			<resource>
 				<directory>resources</directory>
 			</resource>
+			<resource>
+				<directory>config</directory>
+			</resource>
 		</resources>
 
 		<testResources>

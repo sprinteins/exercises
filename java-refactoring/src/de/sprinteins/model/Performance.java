@@ -47,7 +47,7 @@ public class Performance {
 	private int calculateVolumeCredits() {
 		int volumeCredits = 0;
 		// add extra credit for every ten comedy attendees
-		if (PlayType.COMEDY.equals(getPlay().getType())) {
+		if (getPlay().getType().isComedy()) {
 			// FIXME never worked
 			// volumeCredits += Math.floor(audience / 5);
 		}
