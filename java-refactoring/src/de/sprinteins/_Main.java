@@ -1,7 +1,10 @@
 package de.sprinteins;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -11,6 +14,8 @@ import com.google.gson.JsonParser;
  * 
  */
 public class _Main {
+
+	private static JsonParser PARSER = new JsonParser();
 
 	protected enum string_code {
 		tragedy, comedy, none
@@ -82,17 +87,19 @@ public class _Main {
 
 	protected static String _statement(String pathname_invoices, String pathname_plays) throws Exception {
 
-		JsonParser parser = new JsonParser();
-
-		String playsFile = new String(Files.readAllBytes(new File(pathname_plays).toPath()));
-
-		String invoicesFile = new String(Files.readAllBytes(new File(pathname_invoices).toPath()));
-
-		JsonObject plays = parser.parse(playsFile).getAsJsonObject();
-
-		JsonArray invoices = parser.parse(invoicesFile).getAsJsonArray();
+		//backward compatiblitity. first check if file exisits -> IOException
+		String fileContentPlays = getFileContent(pathname_plays);
+		String fileContentInvoices = getFileContent(pathname_invoices);
+		
+		JsonObject plays = PARSER.parse(fileContentPlays).getAsJsonObject();
+		JsonArray invoices = PARSER.parse(fileContentInvoices).getAsJsonArray();
 
 		return _statement(invoices, plays);
+	}
+
+	private static String getFileContent(String pathname) throws IOException {
+		Path path = Path.of(pathname);
+		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 	}
 
 	protected static void _main(String[] args) throws Exception {

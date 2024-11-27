@@ -26,7 +26,7 @@ public class BlackboxTest {
 			String pathname_expected_result) throws Exception {
 
 		// because of \n linebreaks
-		try (Stream<String> stream = Files.lines(Paths.get(Path.of(pathname_expected_result).toUri()),
+		try (Stream<String> stream = Files.lines(Path.of(pathname_expected_result),
 				StandardCharsets.UTF_8)) {
 
 			StringBuilder expectedResultBuilder = new StringBuilder();
