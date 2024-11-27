@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import de.sprinteins.exception.PlayTypeException;
 import lombok.Data;
 
 @Data
@@ -25,6 +23,7 @@ public class Invoice {
 
 		Map<String, Play> playsMap = new HashMap<>();
 
+		//FIXME throws de.sprinteins.exception.PlayTypeException when unkown playtype
 		plays.entrySet().forEach(p -> playsMap.put(p.getKey(), new Play(p.getValue().getAsJsonObject())));
 
 		this.customer = invoice.get("customer").getAsString();
@@ -32,6 +31,7 @@ public class Invoice {
 		invoice.get("performances").getAsJsonArray().forEach(element -> {
 			JsonObject performance = element.getAsJsonObject();
 			String playID = performance.get("playID").getAsString();
+			//FIXME if it is not in the map, than exception with speakable errormessage
 			Play play = playsMap.get(playID);
 			Performance p = new Performance(performance, play);
 			addAndCalculate(p);

@@ -30,7 +30,7 @@ public enum PlayType {
 	 */
 	public static PlayType fromString(String s) throws PlayTypeException {
 		return Arrays.stream(PlayType.values()).filter(v -> v.getValue().equals(s)).findFirst()
-//				.orElse(return PlayType.none);
+//				.orElse(return PlayType.NONE);
 				.orElseThrow(() -> new PlayTypeException("unknown value: " + s));
 	}
 }
