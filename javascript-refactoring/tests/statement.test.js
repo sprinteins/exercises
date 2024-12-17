@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { statement } = require('../statement');
+const { statement, calculateAmount, calculateCredits } = require('../statement');
 const plays = require('../plays.json');
 const invoices = require('../invoices.json');
 
@@ -15,5 +15,24 @@ describe('Statement Generation', () => {
       .replace(/\r\n/g, '\n')  // Convert CRLF to LF
 
     expect(normalizedResult).toBe(expected);
+  });
+});
+// Test the calculationAmount and calculateCredits function
+describe('calculateAmount', () => {
+  test('calculates correct amount for Hamlet performance', () => {
+      const performance = invoices[0].performances[0]; // Hamlet with 55 audience
+      const play = plays[performance.playID];
+      const expectedAmount = 65000; // from results.txt
+      expect(calculateAmount(play, performance)).toBe(expectedAmount);
+  });
+});
+
+// Test the calculateCredits function
+describe('calculateCredits', () => {
+  test('calculates correct credits for Hamlet performance', () => {
+      const performance = invoices[0].performances[0]; // Hamlet with 55 audience
+      const play = plays[performance.playID];
+      const expectedCredits = 25; // 55 - 30 = 25
+      expect(calculateCredits(play, performance)).toBe(expectedCredits);
   });
 });
