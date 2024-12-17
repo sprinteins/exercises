@@ -1,3 +1,5 @@
+const assert = require('assert');
+
 module.exports = {
     statement,
     calculateAmount,
@@ -12,6 +14,8 @@ function statement(invoice, plays, playTypes) {
 
     for (let perf of invoice.performances) {
         const play = plays[perf.playID];
+        assert(playTypes[play.type], `unknown type: ${play.type}`);
+        
         let thisAmount = calculateAmount(play, perf, playTypes);
 
         volumeCredits += calculateCredits(play, perf, playTypes);
@@ -26,9 +30,7 @@ function statement(invoice, plays, playTypes) {
 }
 
 function calculateAmount(play, perf, playTypes) {
-    if (!playTypes[play.type]) {
-        throw new Error(`unknown type: ${play.type}`);
-    }
+    
     const playParameters = playTypes[play.type];
     let thisAmount = playParameters.baseAmount;
 
@@ -42,9 +44,6 @@ function calculateAmount(play, perf, playTypes) {
 
 function calculateCredits(play, perf, playTypes) {
     const BASE_CREDITS_THRESHOLD = 30;
-    if (!playTypes[play.type]) {
-        throw new Error(`unknown type: ${play.type}`);
-    }
     const playParameters = playTypes[play.type];
     
     let credits = Math.max(perf.audience - BASE_CREDITS_THRESHOLD, 0);
