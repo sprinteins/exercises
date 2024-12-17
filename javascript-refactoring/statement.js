@@ -6,27 +6,54 @@ module.exports = {
     calculateCredits
 };
 
-function statement(invoice, plays, playTypes) {
+function createStatementData(invoice, plays, playTypes) {
     let totalAmount = 0;
     let volumeCredits = 0;
-    let result = `Statement for ${invoice.customer}\n`;
-    const format = createFormatter();
+    const statementData = {
+        customer: invoice.customer,
+        performances: [],
+        totalAmount: 0,
+        totalVolumeCredits: 0
+    };
 
     for (let perf of invoice.performances) {
         const play = plays[perf.playID];
         assert(playTypes[play.type], `unknown type: ${play.type}`);
         
-        let thisAmount = calculateAmount(play, perf, playTypes);
+        const thisAmount = calculateAmount(play, perf, playTypes);
+        const credits = calculateCredits(play, perf, playTypes);
 
-        volumeCredits += calculateCredits(play, perf, playTypes);
+        statementData.performances.push({
+            play: play,
+            amount: thisAmount,
+            audience: perf.audience
+        });
 
-        // print line for this order
-        result += `    ${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`;
         totalAmount += thisAmount;
+        volumeCredits += credits;
     }
-    result += `  Amount owed is ${format(totalAmount / 100)}\n`;
-    result += `  You earned ${volumeCredits} credits`;
+    
+    statementData.totalAmount = totalAmount;
+    statementData.totalVolumeCredits = volumeCredits;
+    return statementData;
+}
+
+function renderStatement(statementData) {
+    const format = createFormatter();
+    let result = `Statement for ${statementData.customer}\n`;
+
+    for (let perf of statementData.performances) {
+        result += `    ${perf.play.name}: ${format(perf.amount / 100)} (${perf.audience} seats)\n`;
+    }
+
+    result += `  Amount owed is ${format(statementData.totalAmount / 100)}\n`;
+    result += `  You earned ${statementData.totalVolumeCredits} credits`;
     return result;
+}
+
+function statement(invoice, plays, playTypes) {
+    const statementData = createStatementData(invoice, plays, playTypes);
+    return renderStatement(statementData);
 }
 
 function calculateAmount(play, perf, playTypes) {
