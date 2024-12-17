@@ -14,7 +14,7 @@ function statement(invoice, plays, playTypes) {
         const play = plays[perf.playID];
         let thisAmount = calculateAmount(play, perf, playTypes);
 
-        volumeCredits += calculateCredits(play, perf);
+        volumeCredits += calculateCredits(play, perf, playTypes);
 
         // print line for this order
         result += `    ${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`;
@@ -40,9 +40,16 @@ function calculateAmount(play, perf, playTypes) {
     return thisAmount;
 }
 
-function calculateCredits(play, perf) {
+function calculateCredits(play, perf, playTypes) {
+    if (!playTypes[play.type]) {
+        throw new Error(`unknown type: ${play.type}`);
+    }
+    const playParameters = playTypes[play.type];
+    
     let credits = Math.max(perf.audience - 30, 0);
-    if (play.type === "comedy") credits += Math.floor(perf.audience / 5);
+    if (playParameters.hasCreditsBonus) {
+        credits += Math.floor(perf.audience / playParameters.creditsBonusDivisor);
+    }
     return credits;
 }
 
