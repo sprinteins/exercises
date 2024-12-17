@@ -34,6 +34,6 @@ describe('calculateCredits', () => {
       const performance = invoices[0].performances[0]; // Hamlet with 55 audience
       const play = plays[performance.playID];
       const expectedCredits = 25; // 55 - 30 = 25
-      expect(calculateCredits(play, performance)).toBe(expectedCredits);
+      expect(calculateCredits(play, performance, playTypes)).toBe(expectedCredits);
   });
 });
