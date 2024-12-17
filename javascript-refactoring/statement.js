@@ -6,6 +6,62 @@ module.exports = {
     calculateCredits
 };
 
+/**
+ * @typedef {Object} Play
+ * @property {string} name
+ * @property {string} type
+ */
+
+/**
+ * @typedef {Object} Performance
+ * @property {string} playID
+ * @property {number} audience
+ */
+
+/**
+ * @typedef {Object} Invoice
+ * @property {string} customer
+ * @property {Performance[]} performances
+ */
+
+/**
+ * @typedef {Object} PlayTypeParameters
+ * @property {number} baseAmount
+ * @property {number} audienceThreshold
+ * @property {number} extraBase
+ * @property {number} extraPerAudience
+ * @property {number} perAudience
+ * @property {boolean} hasCreditsBonus
+ * @property {number} creditsBonusDivisor
+ */
+
+/**
+ * @typedef {Object.<string, PlayTypeParameters>} PlayTypes
+ */
+
+/**
+ * @typedef {Object} StatementPerformance
+ * @property {Play} play
+ * @property {number} amount
+ * @property {number} audience
+ */
+
+/**
+ * @typedef {Object} StatementData
+ * @property {string} customer
+ * @property {StatementPerformance[]} performances
+ * @property {number} totalAmount
+ * @property {number} totalVolumeCredits
+ */
+
+
+/**
+ * Creates statement data from invoice and play information.
+ * @param {Invoice} invoice
+ * @param {Object.<string, Play>} plays
+ * @param {PlayTypes} playTypes
+ * @returns {StatementData}
+ */
 function createStatementData(invoice, plays, playTypes) {
     let totalAmount = 0;
     let volumeCredits = 0;
@@ -38,6 +94,11 @@ function createStatementData(invoice, plays, playTypes) {
     return statementData;
 }
 
+/**
+ * Renders the statement data into a formatted string.
+ * @param {StatementData} statementData
+ * @returns {string}
+ */
 function renderStatement(statementData) {
     const format = createFormatter();
     let result = `Statement for ${statementData.customer}\n`;
@@ -51,11 +112,25 @@ function renderStatement(statementData) {
     return result;
 }
 
+/**
+ * Generates a formatted statement for an invoice.
+ * @param {Invoice} invoice
+ * @param {Object.<string, Play>} plays
+ * @param {PlayTypes} playTypes
+ * @returns {string}
+ */
 function statement(invoice, plays, playTypes) {
     const statementData = createStatementData(invoice, plays, playTypes);
     return renderStatement(statementData);
 }
 
+/**
+ * Calculates the amount for a single performance.
+ * @param {Play} play
+ * @param {Performance} perf
+ * @param {PlayTypes} playTypes
+ * @returns {number}
+ */
 function calculateAmount(play, perf, playTypes) {
     
     const playParameters = playTypes[play.type];
@@ -69,6 +144,13 @@ function calculateAmount(play, perf, playTypes) {
     return thisAmount;
 }
 
+/**
+ * Calculates the credits for a single performance.
+ * @param {Play} play
+ * @param {Performance} perf
+ * @param {PlayTypes} playTypes
+ * @returns {number}
+ */
 function calculateCredits(play, perf, playTypes) {
     const BASE_CREDITS_THRESHOLD = 30;
     const playParameters = playTypes[play.type];
@@ -80,6 +162,10 @@ function calculateCredits(play, perf, playTypes) {
     return credits;
 }
 
+/**
+ * Creates a formatter for currency.
+ * @returns {(number) => string}
+ */
 function createFormatter() {
     return new Intl.NumberFormat("en-US", {
         style: "currency",
