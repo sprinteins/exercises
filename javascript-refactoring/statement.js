@@ -120,10 +120,14 @@ function renderStatement(statementData) {
  * @returns {string}
  */
 function statement(invoice, plays, playTypes) {
-    const statementData = createStatementData(invoice, plays, playTypes);
-    return renderStatement(statementData);
+    try {
+        const statementData = createStatementData(invoice, plays, playTypes);
+        return renderStatement(statementData);
+    } catch (error) {
+      console.error("Error generating statement:", error.message);
+      return "Statement could not be generated due to an error."
+    }
 }
-
 /**
  * Calculates the amount for a single performance.
  * @param {Play} play
