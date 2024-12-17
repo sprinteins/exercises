@@ -2,11 +2,12 @@ const fs = require('fs');
 const { statement, calculateAmount, calculateCredits } = require('../statement');
 const plays = require('../plays.json');
 const invoices = require('../invoices.json');
+const playTypes = require('../playTypes.json');
 
 // Generate statement for the first invoice and compare to the result.txt file
 describe('Statement Generation', () => {
   test('should generate statement matching result.txt', () => {
-    const result = statement(invoices[0], plays);
+    const result = statement(invoices[0], plays, playTypes);
 
     const expected = fs.readFileSync('./result.txt', 'utf8')
       .replace(/\r\n/g, '\n')  // Convert CRLF to LF, due to different line endings in Windows vs Unix
@@ -23,7 +24,7 @@ describe('calculateAmount', () => {
       const performance = invoices[0].performances[0]; // Hamlet with 55 audience
       const play = plays[performance.playID];
       const expectedAmount = 65000; // from results.txt
-      expect(calculateAmount(play, performance)).toBe(expectedAmount);
+      expect(calculateAmount(play, performance, playTypes)).toBe(expectedAmount);
   });
 });
 
