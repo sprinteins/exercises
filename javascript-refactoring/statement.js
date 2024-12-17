@@ -41,12 +41,13 @@ function calculateAmount(play, perf, playTypes) {
 }
 
 function calculateCredits(play, perf, playTypes) {
+    const BASE_CREDITS_THRESHOLD = 30;
     if (!playTypes[play.type]) {
         throw new Error(`unknown type: ${play.type}`);
     }
     const playParameters = playTypes[play.type];
     
-    let credits = Math.max(perf.audience - 30, 0);
+    let credits = Math.max(perf.audience - BASE_CREDITS_THRESHOLD, 0);
     if (playParameters.hasCreditsBonus) {
         credits += Math.floor(perf.audience / playParameters.creditsBonusDivisor);
     }
