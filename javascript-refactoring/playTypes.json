@@ -1,0 +1,20 @@
+{
+    "tragedy": {
+        "baseAmount": 40000,
+        "audienceThreshold": 30,
+        "extraBase": 0,
+        "extraPerAudience": 1000,
+        "perAudience": 0,
+        "hasCreditsBonus": false,
+        "creditsBonusDivisor": 0
+    },
+    "comedy": {
+        "baseAmount": 30000,
+        "audienceThreshold": 20,
+        "extraBase": 10000,
+        "extraPerAudience": 500,
+        "perAudience": 300,
+        "hasCreditsBonus": true,
+        "creditsBonusDivisor": 5
+    }
+}
