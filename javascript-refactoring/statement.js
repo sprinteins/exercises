@@ -1,50 +1,63 @@
-module.exports = {
-    statement,
-}
-
-
-function statement(invoice, plays) {
-    let totalAmount = 0;
-    let volumeCredits = 0;
-    let result = `Statement for ${invoice.customer}\n`;
-    const format = new Intl.NumberFormat("en-US",
+const formatCurrency = value => {
+    /**
+     * A function, which receive an amount of money and format that in USD 
+     * @param {int}   value       A json object, which contains the sales detail of each play
+     *
+     * @return {string} Return the styled value in the USD format.
+     */
+    return new Intl.NumberFormat("en-US",
         {
             style: "currency", currency: "USD",
             minimumFractionDigits: 2
-        }).format;
-
-    for (let perf of invoice.performances) {
-        const play = plays[perf.playID];
-        let thisAmount = 0;
-
-        switch (play.type) {
-            case "tragedy":
-                thisAmount = 40000;
-                if (perf.audience > 30) {
-                    thisAmount += 1000 * (perf.audience - 30);
-                }
-                break;
-            case "comedy":
-                thisAmount = 30000;
-                if (perf.audience > 20) {
-                    thisAmount += 10000 + 500 * (perf.audience - 20);
-                }
-                thisAmount += 300 * perf.audience;
-                break;
-            default:
-                throw new Error(`unknown type: ${play.type}`);
-        }
-
-        // add volume credits
-        volumeCredits += Math.max(perf.audience - 30, 0);
-        // add extra credit for every ten comedy attendees
-        if ("comedy" === play.type) volumeCredits += Math.floor(perf.audience / 5);
-
-        // print line for this order
-        result += `  ${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`;
-        totalAmount += thisAmount;
+        }).format(value / 100);
     }
-    result += `Amount owed is ${format(totalAmount / 100)}\n`;
-    result += `You earned ${volumeCredits} credits\n`;
-    return result;
+
+const statement = (invoice, plays) => {
+    /**
+     * A function, which create a Sale report for an invoice 
+     * @param {object}   invoice       A json object, which contains the sales detail of each play
+     * @param {object}   plays         A json object, which contains a mapping(or config) for each play
+     *
+     * @return {string} Return the generated report as a string, for the invoice.
+     */
+    let totalSaleAmount = 0;
+    let volumeCredits = 0;
+    let salseResult = '';
+
+    for (const performance of invoice.performances) {
+        if(!(performance.playID in plays)) throw new Error(`unknown playID for: ${performance.playID}`)
+        const play = plays[performance.playID];
+        const [ volumeCredit, saleAmount ] = calculator(performance, play);
+        // print line for this order
+        salseResult += `  ${play.name}: ${formatCurrency(saleAmount)} (${performance.audience} seats)\n`;
+        totalSaleAmount += saleAmount;
+        volumeCredits += volumeCredit;
+    }
+    const saleReport = `Statement for ${invoice.customer}:\n\n ${salseResult} 
+    Amount owed is: ${formatCurrency(totalSaleAmount)}\n You earned ${volumeCredits} credits\n`;
+    return saleReport;
 }
+
+const calculator = (performance, play) => {
+    /**
+     * A function, which calculate the total sale amount of the given play, 
+     * and the Credit which saler receive for it.
+     * @param {object}   performance     Performance sale detail
+     * @param {object}   play            Extra information about how to calculate the given play inside the performance
+     *
+     * @return {int, int} Return the calculated credit and sale amount.
+     */
+    let saleAmount = play.amount.total;
+    if (performance.audience > play.audienceLimit) {
+        saleAmount += play.amount.constant + (play.amount.multiple1 * (performance.audience - play.audienceLimit));
+    }
+    saleAmount += play.amount.multiple2 * performance.audience;
+
+    // add volume credits if the limit is reached
+    let volumeCredit = Math.max(performance.audience - play.audienceVolumeCredit, 0);
+    // add extra credit if the play has the bonus
+    if (play.audienceBonus) volumeCredit += Math.floor(performance.audience / play.audienceBonus);
+    return [volumeCredit, saleAmount];
+}
+
+export default statement;
