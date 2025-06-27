@@ -1,4 +1,4 @@
-class PerformanceCalculator:
+class PlayChargeCalculator:
     def __init__(self, performance, play):
         self.performance = performance
         self.play = play

@@ -1,6 +1,6 @@
-from .base_calculator import PerformanceCalculator
+from .play_charge_calculator import PlayChargeCalculator
 
-class TragedyCalculator(PerformanceCalculator):
+class TragedyCalculator(PlayChargeCalculator):
     def amount(self):
         result = 40000
         if self.performance["audience"] > 30:

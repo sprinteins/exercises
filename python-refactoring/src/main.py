@@ -1,5 +1,5 @@
 import json
-from core.statement_creator import StatementCreator
+from core.statement_generator import StatementCreator
 from core.statement_formatter import StatementFormatter
 
 def load_json_file(filename):
@@ -16,7 +16,7 @@ try:
     formatter = StatementFormatter(statement_data)
     statement_text = formatter.format()
 
-    output_file = "outputs/result2.txt"
+    output_file = "outputs/output_result.txt"
     with open(output_file, "w") as f:
         f.write(statement_text)
 

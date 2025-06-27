@@ -1,4 +1,4 @@
-from .calculator_factory import create_calculator
+from .play_charge_calculator_factory import create_calculator
 
 class StatementCreator:
     def __init__(self, invoice, plays):
@@ -14,16 +14,16 @@ class StatementCreator:
     def create(self):
         total_amount = 0
         total_credits = 0
-        for perf in self.invoice["performances"]:
-            play = self.plays[perf["playID"]]
-            calculator = create_calculator(perf, play)
+        for performance in self.invoice["performances"]:
+            play = self.plays[performance["playID"]]
+            play_charge_calculator = create_calculator(performance, play)
 
-            amount = calculator.amount()
-            credits = calculator.volume_credits()
+            amount = play_charge_calculator.amount()
+            credits = play_charge_calculator.volume_credits()
 
             self.statement_data["performances"].append({
                 "play": play,
-                "audience": perf["audience"],
+                "audience": performance["audience"],
                 "amount": amount,
                 "credits": credits
             })
