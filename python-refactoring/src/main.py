@@ -6,6 +6,10 @@ def load_json_file(filename):
     with open(filename) as f:
         return json.load(f)
 
+def write_text_file(output_file, text):
+    with open(output_file, "w") as f:
+        f.write(text)
+
 try:
     plays = load_json_file("data/plays.json")
     invoices = load_json_file("data/invoices.json")
@@ -17,8 +21,7 @@ try:
     statement_text = formatter.format()
 
     output_file = "outputs/output_result.txt"
-    with open(output_file, "w") as f:
-        f.write(statement_text)
+    write_text_file(output_file, statement_text)
 
     print(f"Statement written to {output_file}")
 
