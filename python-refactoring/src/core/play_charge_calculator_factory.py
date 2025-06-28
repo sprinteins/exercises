@@ -1,7 +1,16 @@
 from enum import Enum
-from calculators.tragedy_calculator import TragedyCalculator
-from calculators.comedy_calculator import ComedyCalculator
-from errors import ErrorMessages
+
+try:
+    from ..calculators.tragedy_calculator import TragedyCalculator
+    from ..calculators.comedy_calculator import ComedyCalculator
+    from ..errors import ErrorMessages
+except ImportError:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).parent.parent))
+    from calculators.tragedy_calculator import TragedyCalculator
+    from calculators.comedy_calculator import ComedyCalculator
+    from errors import ErrorMessages
 
 class PlayType(Enum):
     TRAGEDY = "tragedy"

@@ -1,14 +1,26 @@
 import json
+import sys
+from pathlib import Path
+
+# Add the src directory to the Python path
+sys.path.insert(0, str(Path(__file__).parent))
+
 from core.statement_generator import StatementCreator
 from core.statement_formatter import StatementFormatter
 from errors import ErrorMessages
 
 def load_json_file(filename):
-    with open(filename) as f:
+    # Get the directory where this script is located
+    script_dir = Path(__file__).parent
+    file_path = script_dir / filename
+    with open(file_path) as f:
         return json.load(f)
 
 def write_text_file(output_file, text):
-    with open(output_file, "w") as f:
+    # Ensure the output directory exists
+    output_path = Path(output_file)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w") as f:
         f.write(text)
 
 try:
@@ -21,7 +33,9 @@ try:
     formatter = StatementFormatter(statement_data)
     statement_text = formatter.format()
 
-    output_file = "outputs/output_result.txt"
+    # Create output file relative to the project root (parent of src)
+    project_root = Path(__file__).parent.parent
+    output_file = project_root / "outputs" / "output_result.txt"
     write_text_file(output_file, statement_text)
 
     print(f"Statement written to {output_file}")
