@@ -1,6 +1,7 @@
 import json
 from core.statement_generator import StatementCreator
 from core.statement_formatter import StatementFormatter
+from errors import ErrorMessages
 
 def load_json_file(filename):
     with open(filename) as f:
@@ -27,14 +28,14 @@ try:
 
 
 except FileNotFoundError as e:
-    print(f"File not found: {e.filename}")
+    print(ErrorMessages.FILE_NOT_FOUND.value.format(filename=e.filename))
 except json.JSONDecodeError as e:
-    print(f"JSON decoding error in file: {e.msg}")
+    print(ErrorMessages.JSON_DECODE_ERROR.value.format(msg=e.msg))
 except KeyError as e:
-    print(f"Missing key: {e}")
+    print(ErrorMessages.MISSING_KEY.value.format(key=e))
 except ValueError as e:
-    print(f"Value error: {e}")
+    print(ErrorMessages.VALUE_ERROR.value.format(error=e))
 except NotImplementedError as e:
-    print(f"Not implemented: {e}")
+    print(ErrorMessages.NOT_IMPLEMENTED.value.format(error=e))
 except Exception as e:
-    print(f"Unexpected error: {e}")
+    print(ErrorMessages.UNEXPECTED_ERROR.value.format(error=e))
