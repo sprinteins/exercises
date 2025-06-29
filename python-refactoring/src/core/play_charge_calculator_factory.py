@@ -11,6 +11,7 @@ except ImportError:
     from calculators.tragedy_calculator import TragedyCalculator
     from calculators.comedy_calculator import ComedyCalculator
     from errors import ErrorMessages
+# This looks weird, but I wanted to run the code from anywhere and also test them from anywhere
 
 class PlayType(Enum):
     TRAGEDY = "tragedy"
