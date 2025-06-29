@@ -3,7 +3,6 @@ from enum import Enum
 from src.calculators.tragedy_calculator import TragedyCalculator
 from src.calculators.comedy_calculator import ComedyCalculator
 from src.errors import ErrorMessages
-# This looks weird, but I wanted to run the code from anywhere and also test them from anywhere
 
 class PlayType(Enum):
     TRAGEDY = "tragedy"

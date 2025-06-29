@@ -1,7 +1,4 @@
-try:
-    from .play_charge_calculator import PlayChargeCalculator
-except ImportError:
-    from play_charge_calculator import PlayChargeCalculator
+from src.calculators.play_charge_calculator import PlayChargeCalculator
 
 class TragedyCalculator(PlayChargeCalculator):
     def amount(self):
