@@ -8,11 +8,13 @@ from core.statement_creator import StatementCreator
 from core.statement_formatter import StatementFormatter
 from errors import ErrorMessages
 
+
 def load_json_file(filename):
     script_dir = Path(__file__).parent
     file_path = script_dir / filename
     with open(file_path) as f:
         return json.load(f)
+
 
 def write_text_file(output_file, text):
     output_path = Path(output_file)
@@ -20,6 +22,7 @@ def write_text_file(output_file, text):
     with open(output_path, "w") as f:
         f.write(text)
     print(f"Statement written to {output_file}")
+
 
 try:
     plays = load_json_file("../data/plays.json")

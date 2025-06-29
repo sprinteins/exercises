@@ -1,5 +1,6 @@
 from src.calculators.play_charge_calculator import PlayChargeCalculator
 
+
 class ComedyCalculator(PlayChargeCalculator):
     def amount(self):
         audience = self.performance["audience"]

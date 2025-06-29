@@ -1,5 +1,6 @@
 from errors import ErrorMessages
 
+
 class PlayChargeCalculator:
     def __init__(self, performance, play):
         self.performance = performance

@@ -1,5 +1,6 @@
 from enum import Enum, unique
 
+
 @unique
 class ErrorMessages(Enum):
     MUST_IMPLEMENT_AMOUNT = "Subclass must implement amount"

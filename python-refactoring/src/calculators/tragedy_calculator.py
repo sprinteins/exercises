@@ -1,5 +1,6 @@
 from src.calculators.play_charge_calculator import PlayChargeCalculator
 
+
 class TragedyCalculator(PlayChargeCalculator):
     def amount(self):
         result = 40000

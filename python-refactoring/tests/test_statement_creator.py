@@ -1,3 +1,5 @@
+import pytest
+
 from src.core.statement_creator import StatementCreator
 
 
@@ -12,7 +14,7 @@ def test_statement_creator_exact_amounts_and_credits():
         "performances": [
             {"playID": "hamlet", "audience": 55},
             {"playID": "as-like", "audience": 35},
-        ]
+        ],
     }
 
     creator = StatementCreator(invoice, plays)
@@ -44,3 +46,13 @@ def test_statement_creator_exact_amounts_and_credits():
 
     assert statement["totalAmount"] == expected_total_amount
     assert statement["totalCredits"] == expected_total_credits
+
+
+def test_statement_creator_missing_key():
+    plays = {"hamlet": {"type": "tragedy"}}
+    invoice = {"performances": []}  # missing "customer"
+
+    with pytest.raises(KeyError) as excinfo:
+        StatementCreator(invoice, plays).create()
+
+    assert str(excinfo.value).strip("'") == "customer"

@@ -1,7 +1,8 @@
 import pytest
-from src.core.play_charge_calculator_factory import create_calculator, PlayType
-from src.calculators.tragedy_calculator import TragedyCalculator
+
 from src.calculators.comedy_calculator import ComedyCalculator
+from src.calculators.tragedy_calculator import TragedyCalculator
+from src.core.play_charge_calculator_factory import PlayType, create_calculator
 from src.errors import ErrorMessages
 
 
@@ -19,9 +20,9 @@ def test_create_calculator_comedy():
     assert isinstance(calculator, ComedyCalculator)
 
 
-def test_create_calculator_invalid_type():
+def test_create_calculator_with_invalid_play_type():
     performance = {"audience": 40}
-    play = {"type": "mystery"}
+    play = {"type": "musical"}
 
     with pytest.raises(ValueError) as excinfo:
         create_calculator(performance, play)

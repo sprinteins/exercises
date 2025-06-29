@@ -1,5 +1,6 @@
 from core.play_charge_calculator_factory import create_calculator
 
+
 class StatementCreator:
     def __init__(self, invoice, plays):
         self.invoice = invoice
@@ -8,7 +9,7 @@ class StatementCreator:
             "customer": invoice["customer"],
             "performances": [],
             "totalAmount": 0,
-            "totalCredits": 0
+            "totalCredits": 0,
         }
 
     def create(self):
@@ -21,12 +22,14 @@ class StatementCreator:
             amount = play_charge_calculator.amount()
             credits = play_charge_calculator.volume_credits()
 
-            self.statement_data["performances"].append({
-                "play": play,
-                "audience": performance["audience"],
-                "amount": amount,
-                "credits": credits
-            })
+            self.statement_data["performances"].append(
+                {
+                    "play": play,
+                    "audience": performance["audience"],
+                    "amount": amount,
+                    "credits": credits,
+                }
+            )
 
             total_amount += amount
             total_credits += credits

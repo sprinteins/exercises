@@ -1,8 +1,9 @@
 from enum import Enum
 
-from src.calculators.tragedy_calculator import TragedyCalculator
 from src.calculators.comedy_calculator import ComedyCalculator
+from src.calculators.tragedy_calculator import TragedyCalculator
 from src.errors import ErrorMessages
+
 
 class PlayType(Enum):
     TRAGEDY = "tragedy"

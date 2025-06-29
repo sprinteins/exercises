@@ -9,14 +9,14 @@ class StatementFormatter:
     def format(self):
         lines = f"Statement for {self.data['customer']}\n"
 
-        for perf in self.data['performances']:
-            name = perf['play']['name']
-            amount = self.cents_to_dollar_string(perf['amount'])
-            audience = perf['audience']
+        for perf in self.data["performances"]:
+            name = perf["play"]["name"]
+            amount = self.cents_to_dollar_string(perf["amount"])
+            audience = perf["audience"]
             lines += f"\t\t{name}: {amount} ({audience} seats)\n"
 
-        total_amount = self.cents_to_dollar_string(self.data['totalAmount'])
-        total_credits = self.data['totalCredits']
+        total_amount = self.cents_to_dollar_string(self.data["totalAmount"])
+        total_credits = self.data["totalCredits"]
 
         lines += f"\tAmount owed is {total_amount}\n"
         lines += f"\tYou earned {total_credits} credits\n"
