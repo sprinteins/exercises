@@ -1,3 +1,6 @@
+from errors import ErrorMessages
+
+
 class StatementFormatter:
     def __init__(self, statement_data):
         self.data = statement_data
@@ -7,6 +10,12 @@ class StatementFormatter:
         return f"${amount_cents / 100:,.2f}"
 
     def format(self):
+        if not isinstance(self.data.get("customer"), str):
+            raise ValueError(ErrorMessages.INVALID_CUSTOMER.value)
+
+        if not isinstance(self.data.get("performances"), list):
+            raise ValueError(ErrorMessages.INVALID_PERFORMANCES.value)
+
         lines = f"Statement for {self.data['customer']}\n"
 
         for perf in self.data["performances"]:

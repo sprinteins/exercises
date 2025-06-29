@@ -10,4 +10,6 @@ class ErrorMessages(Enum):
     MISSING_KEY = "Missing key: {key}"
     VALUE_ERROR = "Value error: {error}"
     NOT_IMPLEMENTED = "Not implemented: {error}"
+    INVALID_CUSTOMER = "Invalid or missing 'customer'"
+    INVALID_PERFORMANCES = "Invalid or missing 'performances'"
     UNEXPECTED_ERROR = "Unexpected error: {error}"
