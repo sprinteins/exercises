@@ -1,7 +1,4 @@
-try:
-    from .play_charge_calculator_factory import create_calculator
-except ImportError:
-    from play_charge_calculator_factory import create_calculator
+from core.play_charge_calculator_factory import create_calculator
 
 class StatementCreator:
     def __init__(self, invoice, plays):

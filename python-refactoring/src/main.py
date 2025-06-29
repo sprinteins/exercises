@@ -4,7 +4,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from core.statement_generator import StatementCreator
+from core.statement_creator import StatementCreator
 from core.statement_formatter import StatementFormatter
 from errors import ErrorMessages
 
@@ -19,10 +19,11 @@ def write_text_file(output_file, text):
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w") as f:
         f.write(text)
+    print(f"Statement written to {output_file}")
 
 try:
-    plays = load_json_file("data/plays.json")
-    invoices = load_json_file("data/invoices.json")
+    plays = load_json_file("../data/plays.json")
+    invoices = load_json_file("../data/invoices.json")
 
     creator = StatementCreator(invoices[0], plays)
     statement_data = creator.create()
@@ -33,8 +34,6 @@ try:
     project_root = Path(__file__).parent.parent
     output_file = project_root / "outputs" / "output_result.txt"
     write_text_file(output_file, statement_text)
-
-    print(f"Statement written to {output_file}")
 
 
 except FileNotFoundError as e:

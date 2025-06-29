@@ -1,16 +1,8 @@
 from enum import Enum
 
-try:
-    from ..calculators.tragedy_calculator import TragedyCalculator
-    from ..calculators.comedy_calculator import ComedyCalculator
-    from ..errors import ErrorMessages
-except ImportError:
-    import sys
-    from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).parent.parent))
-    from calculators.tragedy_calculator import TragedyCalculator
-    from calculators.comedy_calculator import ComedyCalculator
-    from errors import ErrorMessages
+from src.calculators.tragedy_calculator import TragedyCalculator
+from src.calculators.comedy_calculator import ComedyCalculator
+from src.errors import ErrorMessages
 # This looks weird, but I wanted to run the code from anywhere and also test them from anywhere
 
 class PlayType(Enum):

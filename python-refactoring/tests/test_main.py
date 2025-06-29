@@ -1,10 +1,12 @@
 import json
 from pathlib import Path
-from src.core.statement_generator import StatementCreator
+from src.core.statement_creator import StatementCreator
 from src.core.statement_formatter import StatementFormatter
 
 def load_json_file(filename):
-    with open(Path("src") / "data" / filename) as f:
+    base_path = Path(__file__).resolve().parent.parent
+    data_path = base_path / "data" / filename
+    with open(data_path) as f:
         return json.load(f)
 
 def test_generate_statement_contains_key_lines():

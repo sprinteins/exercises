@@ -1,4 +1,4 @@
-from src.core.statement_generator import StatementCreator
+from src.core.statement_creator import StatementCreator
 
 
 def test_statement_creator_exact_amounts_and_credits():
@@ -20,7 +20,7 @@ def test_statement_creator_exact_amounts_and_credits():
 
     # Hemlet
     expected_hamlet_amount = 40000 + (25 * 1000)
-    expected_hamlet_credits = 25  # 55 - 30
+    expected_hamlet_credits = max(55 - 30, 0)
 
     # As You Like It
     expected_comedy_amount = 30000 + 10000 + ((35 - 20) * 500) + (300 * 35)
