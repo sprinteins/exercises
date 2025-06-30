@@ -3,46 +3,96 @@ import pytest
 from src.core.statement_creator import StatementCreator
 
 
-def test_statement_creator_exact_amounts_and_credits():
-    plays = {
-        "hamlet": {"name": "Hamlet", "type": "tragedy"},
-        "as-like": {"name": "As You Like It", "type": "comedy"},
-    }
+@pytest.mark.parametrize(
+    "invoice, plays, expected",
+    [
+        # Tragedy + Comedy
+        (
+            {
+                "customer": "BigCo",
+                "performances": [
+                    {"playID": "hamlet", "audience": 55},
+                    {"playID": "as-like", "audience": 35},
+                ],
+            },
+            {
+                "hamlet": {"name": "Hamlet", "type": "tragedy"},
+                "as-like": {"name": "As You Like It", "type": "comedy"},
+            },
+            {
+                "Hamlet": {
+                    "amount": 40000 + (25 * 1000),
+                    "credits": max(55 - 30, 0),
+                },
+                "As You Like It": {
+                    "amount": 30000 + 10000 + ((35 - 20) * 500) + (300 * 35),
+                    "credits": max(35 - 30, 0) + (35 // 5),
+                },
+            },
+        ),
+        # Only Hamlet, exactly 30 audience (no bonus)
+        (
+            {
+                "customer": "TragedyFan",
+                "performances": [{"playID": "hamlet", "audience": 30}],
+            },
+            {
+                "hamlet": {"name": "Hamlet", "type": "tragedy"},
+            },
+            {
+                "Hamlet": {
+                    "amount": 40000,
+                    "credits": 0,
+                },
+            },
+        ),
+        # Only Comedy, audience > 20 (triggers bonus)
+        (
+            {
+                "customer": "ComedyFan",
+                "performances": [{"playID": "funny", "audience": 25}],
+            },
+            {
+                "funny": {"name": "Funny Play", "type": "comedy"},
+            },
+            {
+                "Funny Play": {
+                    "amount": 30000 + 10000 + ((25 - 20) * 500) + (300 * 25),
+                    "credits": max(25 - 30, 0) + (25 // 5),
+                },
+            },
+        ),
+        # Only Comedy, audience ≤ 20 (no bonus)
+        (
+            {
+                "customer": "TinyCrowd",
+                "performances": [{"playID": "chill-comedy", "audience": 20}],
+            },
+            {
+                "chill-comedy": {"name": "Chill Comedy", "type": "comedy"},
+            },
+            {
+                "Chill Comedy": {
+                    "amount": 30000 + (300 * 20),
+                    "credits": max(20 - 30, 0) + (20 // 5),
+                },
+            },
+        ),
+    ],
+)
+def test_statement_creator_various_valid_inputs(invoice, plays, expected):
+    statement = StatementCreator(invoice, plays).create()
 
-    invoice = {
-        "customer": "BigCo",
-        "performances": [
-            {"playID": "hamlet", "audience": 55},
-            {"playID": "as-like", "audience": 35},
-        ],
-    }
+    total_amount = 0
+    total_credits = 0
 
-    creator = StatementCreator(invoice, plays)
-    statement = creator.create()
+    for performance in statement["performances"]:
+        play_name = performance["play"]["name"]
+        assert performance["amount"] == expected[play_name]["amount"]
+        assert performance["credits"] == expected[play_name]["credits"]
+        total_amount += performance["amount"]
+        total_credits += performance["credits"]
 
-    # Hemlet
-    expected_hamlet_amount = 40000 + (25 * 1000)
-    expected_hamlet_credits = max(55 - 30, 0)
-
-    # As You Like It
-    expected_comedy_amount = 30000 + 10000 + ((35 - 20) * 500) + (300 * 35)
-    expected_comedy_credits = max(35 - 30, 0) + (35 // 5)
-
-    expected_total_amount = expected_hamlet_amount + expected_comedy_amount
-    expected_total_credits = expected_hamlet_credits + expected_comedy_credits
-
-    hamlet_perf = statement["performances"][0]
-    comedy_perf = statement["performances"][1]
-
-    assert statement["customer"] == "BigCo"
-
-    assert hamlet_perf["play"]["name"] == "Hamlet"
-    assert hamlet_perf["amount"] == expected_hamlet_amount
-    assert hamlet_perf["credits"] == expected_hamlet_credits
-
-    assert comedy_perf["play"]["name"] == "As You Like It"
-    assert comedy_perf["amount"] == expected_comedy_amount
-    assert comedy_perf["credits"] == expected_comedy_credits
-
-    assert statement["totalAmount"] == expected_total_amount
-    assert statement["totalCredits"] == expected_total_credits
+    assert statement["customer"] == invoice["customer"]
+    assert statement["totalAmount"] == total_amount
+    assert statement["totalCredits"] == total_credits

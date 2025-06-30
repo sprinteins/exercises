@@ -18,8 +18,7 @@ def test_generate_statement_contains_key_lines():
     plays = load_json_file("plays.json")
     invoices = load_json_file("invoices.json")
 
-    creator = StatementCreator(invoices[0], plays)
-    statement_data = creator.create()
+    statement_data = StatementCreator(invoices[0], plays).create()
 
     formatter = StatementFormatter(statement_data)
     statement = formatter.format()

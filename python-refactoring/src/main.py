@@ -28,11 +28,9 @@ try:
     plays = load_json_file("../data/plays.json")
     invoices = load_json_file("../data/invoices.json")
 
-    creator = StatementCreator(invoices[0], plays)
-    statement_data = creator.create()
+    statement_data = StatementCreator(invoices[0], plays).create()
 
-    formatter = StatementFormatter(statement_data)
-    statement_text = formatter.format()
+    statement_text = StatementFormatter(statement_data).format()
 
     project_root = Path(__file__).parent.parent
     output_file = project_root / "outputs" / "output_result.txt"
