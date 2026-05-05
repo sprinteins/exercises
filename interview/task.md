@@ -1,7 +1,6 @@
 # Interview Task
 
-The task is to read the following e-mail conversation between a product owner and customer and create a model of that you would implement.
-We would like that you bring your solution to the interview.
+The task is to read the following email conversation between a product owner and a customer and create a model diagram that you believe would address all the requirements. We would like you to bring your solution to the interview.
 
 
 ## Email Conversation
