@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interview Task</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@300;400;700&display=swap');
+
+    body {
+      font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 300;
+      background: #ffffff;
+      color: #000003;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .logo {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #000003;
+      text-decoration: none;
+    }
+
+    .nav-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #77777a;
+    }
+
+    /* ── CENTER WRAPPER ── */
+    .center {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 5rem 0 3rem;
+    }
+
+    .hero h1 {
+      font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #fd4864;
+    }
+
+    .hero p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #77777a;
+      max-width: 520px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: #e8e8e8;
+      margin: 3rem 0;
+    }
+
+    /* ── CHAT SECTION ── */
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #77777a;
+      margin-bottom: 2rem;
+    }
+
+    .chat {
+      padding-bottom: 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .message { display: flex; flex-direction: column; }
+    .message.tom   { align-items: flex-end; }
+    .message.maria { align-items: flex-start; }
+
+    .sender {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #77777a;
+      margin-bottom: 0.35rem;
+      padding: 0 0.25rem;
+    }
+
+    .bubble {
+      max-width: 72%;
+      padding: 1rem 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    .message.maria .bubble {
+      background: #f5f5f5;
+      border-left: 3px solid #fd4864;
+    }
+
+    .message.tom .bubble {
+      background: #000003;
+      color: #ffffff;
+      border-right: 3px solid #ff7e7e;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #05050a;
+      color: #fff;
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+    }
+
+    footer .logo-footer {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    footer .footer-note {
+      color: #77777a;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="logo" href="#">SprintEins</a>
+    <span class="nav-tag">Interview Task</span>
+  </nav>
+
+  <!-- HERO -->
+  <div class="center">
+    <div class="hero">
+      <h1>Table Management<br><em>Requirements</em></h1>
+      <p>
+        Read the following email conversation between a product owner and a customer,
+        then create a model diagram that you believe would address all the requirements.
+      </p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CHAT -->
+  <div class="center">
+  <p class="section-label">Email Conversation</p>
+
+  <div class="chat">
+
+    <div class="message maria">
+      <div class="sender">Maria → Tom</div>
+      <div class="bubble">Dear Tom, I am reaching out regarding the table management system we discussed. Could you let me know what information you need from me to get started?<br><br>Best regards, Maria</div>
+    </div>
+
+    <div class="message tom">
+      <div class="sender">Tom → Maria</div>
+      <div class="bubble">Dear Maria, thank you for getting in touch! Could you tell me how many tables the taverna has, and whether capacities vary between them?<br><br>Kind regards, Tom</div>
+    </div>
+
+    <div class="message maria">
+      <div class="sender">Maria → Tom</div>
+      <div class="bubble">Dear Tom, we have 12 tables — small ones seat 2–3, mid-range 4–5, and larger ones up to 8. We also have a bar area for waiting guests.<br><br>Best regards, Maria</div>
+    </div>
+
+    <div class="message tom">
+      <div class="sender">Tom → Maria</div>
+      <div class="bubble">Dear Maria, thank you. How far in advance does a reserved table become unavailable to walk-ins?</div>
+    </div>
+
+    <div class="message maria">
+      <div class="sender">Maria → Tom</div>
+      <div class="bubble">Dear Tom, we block tables 1–2 hours before the booking time.<br><br>Best regards, Maria</div>
+    </div>
+
+    <div class="message tom">
+      <div class="sender">Tom → Maria</div>
+      <div class="bubble">Dear Maria, understood. If a group cannot all fit at the bar while waiting, would they split up or leave together?</div>
+    </div>
+
+    <div class="message maria">
+      <div class="sender">Maria → Tom</div>
+      <div class="bubble">Dear Tom, they would leave. A group splitting up at the bar would be quite unusual.<br><br>Best regards, Maria</div>
+    </div>
+
+    <div class="message tom">
+      <div class="sender">Tom → Maria</div>
+      <div class="bubble">Dear Maria, noted. Are regular guests' expectations currently tracked anywhere, or is it handled informally by staff?</div>
+    </div>
+
+    <div class="message maria">
+      <div class="sender">Maria → Tom</div>
+      <div class="bubble">Dear Tom, at the moment it is entirely informal — staff simply know from experience. However, we would like to have that tracked in the system going forward.<br><br>Best regards, Maria</div>
+    </div>
+
+    <div class="message tom">
+      <div class="sender">Tom → Maria</div>
+      <div class="bubble">Dear Maria, for guests who prefer to sit alone — do they have any seating priority, or is it strictly first-come, first-served?</div>
+    </div>
+
+    <div class="message maria">
+      <div class="sender">Maria → Tom</div>
+      <div class="bubble">Dear Tom, no priority — first-come, first-served. Some solo guests will move themselves if it gets too busy, but that is their own choice.<br><br>Best regards, Maria</div>
+    </div>
+
+    <div class="message tom">
+      <div class="sender">Tom → Maria</div>
+      <div class="bubble">Dear Maria, final clarification — should the system actively enforce seating preferences, or simply reflect the current floor state and let guests act on their own?</div>
+    </div>
+
+    <div class="message maria">
+      <div class="sender">Maria → Tom</div>
+      <div class="bubble">Dear Tom, simply reflect reality — who is seated where, what is reserved, what is free. Guests manage their own preferences.<br><br>Best regards, Maria</div>
+    </div>
+
+  </div><!-- /chat -->
+  </div><!-- /center -->
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="logo-footer">SprintEins</span>
+    <span class="footer-note">Bring your solution to the interview.</span>
+  </footer>
+
+</body>
+</html>
